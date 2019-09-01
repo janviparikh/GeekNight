@@ -8,8 +8,8 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @SpringBootApplication
 @EnableCaching
 @EnableScheduling
-class ApplicationClass
+class Application
 
 fun main(args: Array<String>) {
-    runApplication<ApplicationClass>(*args)
+    runApplication<Application>(*args)
 }
