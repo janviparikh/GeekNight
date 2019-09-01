@@ -2,8 +2,6 @@
 /build/
 !gradle/wrapper/gradle-wrapper.jar
 /gradle/
-gradlew.bat
-gradlew
 
 ### OS ###
 .DS_Store
