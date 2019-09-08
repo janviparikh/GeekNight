@@ -9,17 +9,18 @@ import reactor.core.publisher.Mono
 
 @RestController
 class ApplicationController(val geekNightService: GeekNightService,
-                            val hostService: HostService) {
+                            val hostService: HostService
+) {
 
     @GetMapping("welcome/{user}")
     fun greetReactive(@PathVariable("user") user: String): Mono<WelcomeMessage> {
         return geekNightService.getGreetMessage()
-                .map {
-                    WelcomeMessage(it.message.plus(" ").plus(user))
-                }
-                .map {
-                    val hostService = hostService.getHosts()
-                    WelcomeMessage(it.message.plus(" : your host for tonight would be ").plus(hostService))
+                .map { WelcomeMessage(it.message.plus(" ").plus(user)) }
+                .flatMap { welcomeMessage ->
+                    hostService.getHosts()
+                            .map {
+                                WelcomeMessage(welcomeMessage.message + " : your host for tonight would be " + it.toString())
+                            }
                 }
                 .log()
     }
