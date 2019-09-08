@@ -26,7 +26,7 @@ internal class ApplicationControllerTest {
                 .exchange()
                 .expectStatus().is2xxSuccessful
                 .expectBody().jsonPath("$.message")
-                .isEqualTo("Welcome to geek night mandar : your host for tonight would be [Janvi, Partha, Nikesh]")
+                .isEqualTo("Welcome to geek night mandar : your host for tonight would be [Agent A , Agent B]")
 
     }
 
