@@ -38,7 +38,7 @@ internal class ApplicationControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().is2xxSuccessful
-                .expectBody().json("{\"linkedInProfile\":{\"experience\":5.5,\"companies\":2,\"location\":\"Mumbai\"},\"githubProfile\":{\"projects\":[\"spring-boot-extension\",\"jwt-auth\"],\"languages\":[\"java\",\"python\",\"kotlin\"]}}\n")
+                .expectBody().json("{\"linkedInProfile\":{\"experience\":5.5,\"companies\":2,\"location\":\"Mumbai\"},\"githubProfile\":{\"projects\":[],\"languages\":[]}}\n")
 
     }
 

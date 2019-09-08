@@ -5,6 +5,7 @@ import com.thoughtworks.geeknight.model.LinkedInProfile
 import com.thoughtworks.geeknight.model.ParticipantProfile
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
+import reactor.core.publisher.switchIfEmpty
 import reactor.core.publisher.toMono
 
 @Service
@@ -12,7 +13,7 @@ class SocialMediaService {
 
     fun getSocialMediaProfile(user: String): Mono<ParticipantProfile> {
         val linkedInProfile = getLinkedInProfile()
-        val githubProfile = getGitHubProfile()
+        val githubProfile = getGitHubProfile().switchIfEmpty { GithubProfile(emptyList(), emptyList()).toMono() }
 
         return Mono.zip(linkedInProfile,githubProfile).map {
             ParticipantProfile(it.t1,it.t2)
@@ -27,7 +28,7 @@ class SocialMediaService {
     }
 
     private fun getGitHubProfile(): Mono<GithubProfile> {
-        return GithubProfile(listOf("spring-boot-extension", "jwt-auth"), listOf("java", "python", "kotlin")).toMono()
+        return Mono.empty()
     }
 
     private fun getLinkedInProfile(): Mono<LinkedInProfile> {
