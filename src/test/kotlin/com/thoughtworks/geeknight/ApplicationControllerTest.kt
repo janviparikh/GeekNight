@@ -21,11 +21,11 @@ internal class ApplicationControllerTest {
     @Test
     fun `welcome to geeknight`() {
 
-        webTestClient.get().uri("http://localhost:9004/welcome")
+        webTestClient.get().uri("http://localhost:9004/welcome/mandar")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().is2xxSuccessful
-                .expectBody().jsonPath("$.message").isEqualTo("Welcome to geek night")
+                .expectBody().jsonPath("$.message").isEqualTo("Welcome to geek night mandar")
 
     }
 

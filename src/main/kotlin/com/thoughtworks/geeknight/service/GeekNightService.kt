@@ -11,6 +11,5 @@ class GeekNightService {
     fun getGreetMessage(): Mono<WelcomeMessage> {
         return WelcomeMessage("Welcome to geek night")
                 .toMono()
-                .log()
     }
 }
