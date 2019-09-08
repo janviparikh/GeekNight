@@ -1,7 +1,9 @@
 package com.thoughtworks.geeknight
 
+import com.thoughtworks.geeknight.model.ParticipantProfile
 import com.thoughtworks.geeknight.service.GeekNightService
 import com.thoughtworks.geeknight.service.HostService
+import com.thoughtworks.geeknight.service.SocialMediaService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
@@ -9,7 +11,8 @@ import reactor.core.publisher.Mono
 
 @RestController
 class ApplicationController(val geekNightService: GeekNightService,
-                            val hostService: HostService
+                            val hostService: HostService,
+                            val socialMediaService: SocialMediaService
 ) {
 
     @GetMapping("welcome/{user}")
@@ -24,6 +27,15 @@ class ApplicationController(val geekNightService: GeekNightService,
                 }
                 .log()
     }
+
+
+    @GetMapping("profile/{user}")
+    fun getParticipantProfile(@PathVariable("user") user: String): Mono<ParticipantProfile> {
+        return socialMediaService
+                .getSocialMediaProfile(user)
+                .log()
+    }
+
 
     @GetMapping("welcome1")
     fun greetNonReactive(): WelcomeMessage {

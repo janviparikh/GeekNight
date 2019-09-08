@@ -30,4 +30,16 @@ internal class ApplicationControllerTest {
 
     }
 
+
+    @Test
+    fun `participant profile`() {
+
+        webTestClient.get().uri("http://localhost:9004/profile/partho")
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().is2xxSuccessful
+                .expectBody().json("{\"linkedInProfile\":{\"experience\":5.5,\"companies\":2,\"location\":\"Mumbai\"},\"githubProfile\":{\"projects\":[\"spring-boot-extension\",\"jwt-auth\"],\"languages\":[\"java\",\"python\",\"kotlin\"]}}\n")
+
+    }
+
 }
