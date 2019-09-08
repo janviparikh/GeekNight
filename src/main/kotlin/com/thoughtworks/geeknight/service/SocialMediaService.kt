@@ -13,11 +13,17 @@ class SocialMediaService {
     fun getSocialMediaProfile(user: String): Mono<ParticipantProfile> {
         val linkedInProfile = getLinkedInProfile()
         val githubProfile = getGitHubProfile()
+
+        return Mono.zip(linkedInProfile,githubProfile).map {
+            ParticipantProfile(it.t1,it.t2)
+        }
+/*
         return linkedInProfile.flatMap { linkedIn ->
             githubProfile.map { github ->
                 ParticipantProfile(linkedIn, github)
             }
         }
+*/
     }
 
     private fun getGitHubProfile(): Mono<GithubProfile> {
