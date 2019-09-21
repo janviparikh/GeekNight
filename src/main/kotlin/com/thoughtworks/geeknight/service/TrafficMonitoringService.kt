@@ -12,6 +12,7 @@ class TrafficMonitoringService(val monitoringClient: MonitoringClient,
         return monitoringClient
                 .feedLiveData()
                 .map {trafficEvent-> trafficAnalysisService.analyzeEvents(trafficEvent) }
+                .subscribeOn(Schedulers.parallel())
     }
 
 }
