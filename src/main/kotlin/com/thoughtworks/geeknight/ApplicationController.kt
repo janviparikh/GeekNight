@@ -1,19 +1,19 @@
 package com.thoughtworks.geeknight
 
 import com.thoughtworks.geeknight.model.ParticipantProfile
-import com.thoughtworks.geeknight.service.GeekNightService
-import com.thoughtworks.geeknight.service.HostService
-import com.thoughtworks.geeknight.service.SocialMediaService
+import com.thoughtworks.geeknight.service.*
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @RestController
 class ApplicationController(val geekNightService: GeekNightService,
                             val hostService: HostService,
-                            val socialMediaService: SocialMediaService
-) {
+                            val socialMediaService: SocialMediaService,
+                            val trafficMonitoringService: TrafficMonitoringService)
+{
 
     @GetMapping("welcome/{user}")
     fun greetReactive(@PathVariable("user") user: String): Mono<WelcomeMessage> {
@@ -40,6 +40,11 @@ class ApplicationController(val geekNightService: GeekNightService,
     @GetMapping("welcome1")
     fun greetNonReactive(): WelcomeMessage {
         return WelcomeMessage("Welcome to geek night")
+    }
+
+    @GetMapping("feed",produces = ["application/stream+json"])
+    fun getFeed(): Flux<TrafficEvent> {
+        return trafficMonitoringService.getFeed()
     }
 
 }
