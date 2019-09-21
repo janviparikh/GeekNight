@@ -11,8 +11,11 @@ class TrafficMonitoringService(val monitoringClient: MonitoringClient,
     fun getFeed(): Flux<TrafficEvent> {
         return monitoringClient
                 .feedLiveData()
+                .parallel()
+                .runOn(Schedulers.parallel())
                 .map {trafficEvent-> trafficAnalysisService.analyzeEvents(trafficEvent) }
-                .subscribeOn(Schedulers.parallel())
+                .sequential()
+                .sort()
     }
 
 }
