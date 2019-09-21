@@ -16,4 +16,13 @@ class TrafficAnalysisService {
     }
 
 
+    fun sendToAudit(trafficEvent: TrafficEvent): Mono<TrafficEvent> {
+        return trafficEvent.toMono()
+                .log("SendAudit running on ${Thread.currentThread().name}")
+                .map { it }
+
+    }
+
+
+
 }

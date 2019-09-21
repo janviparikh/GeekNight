@@ -15,6 +15,8 @@ class TrafficMonitoringService(val monitoringClient: MonitoringClient,
                 .runOn(Schedulers.parallel())
                 .map {trafficEvent-> trafficAnalysisService.analyzeEvents(trafficEvent) }
                 .sequential()
+                .publishOn(Schedulers.elastic())
+                .flatMap {trafficEvent-> trafficAnalysisService.sendToAudit(trafficEvent) }
                 .sort()
     }
 
