@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import reactor.core.scheduler.Schedulers
 
 @RestController
 class ApplicationController(val geekNightService: GeekNightService,
@@ -45,6 +46,15 @@ class ApplicationController(val geekNightService: GeekNightService,
     @GetMapping("feed",produces = ["application/stream+json"])
     fun getFeed(): Flux<TrafficEvent> {
         return trafficMonitoringService.getFeed()
+    }
+
+    @GetMapping("welcome-delay")
+    fun greetWithDelay(): Mono<WelcomeMessage> {
+        return geekNightService.getGreetMessage()
+                .map {
+                    Thread.sleep(1000)
+                    it
+                }
     }
 
 }

@@ -15,7 +15,6 @@ class ParticipantService(val participantRepository: ParticipantRepository,
                 .getParticipants()
                 .subList(0, count - 1)
                 .map {
-                    println("Participant : $it")
                     it
                 }
     }
@@ -25,7 +24,6 @@ class ParticipantService(val participantRepository: ParticipantRepository,
                 .getParticipants()
                 .take(count)
                 .map {
-                    println("Participant : $it")
                     it
                 }
     }
