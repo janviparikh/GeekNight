@@ -16,7 +16,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 internal class ApplicationControllerTest {
 
     @Autowired
-    lateinit var webTestClient:WebTestClient
+    lateinit var webTestClient: WebTestClient
 
     @Test
     fun `welcome to geeknight`() {
@@ -25,7 +25,8 @@ internal class ApplicationControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().is2xxSuccessful
-                .expectBody().jsonPath("$.message").isEqualTo("Welcome to geek night mandar")
+                .expectBody().jsonPath("$.message")
+                .isEqualTo("Welcome to geek night mandar : your host for tonight would be [Janvi, Partha, Nikesh]")
 
     }
 
